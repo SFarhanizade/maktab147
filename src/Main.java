@@ -7,7 +7,7 @@ public class Main {
         IO.println("Hello maktab!");
         IO.println("Hello maktab!");
         IO.println("Hello maktab!");
-        IO.println("here");
+        IO.println("Here");
         IO.println("Romeysa");
         IO.println("maktab");
     }
