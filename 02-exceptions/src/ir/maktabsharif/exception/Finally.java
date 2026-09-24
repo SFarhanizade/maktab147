@@ -1,20 +1,22 @@
 package ir.maktabsharif.exception;
 
 public class Finally {
-    void main() {
-        var database = new Database();
-        try {
+    void main() throws Exception {
+        try (var database = new Database();
+             var database2 = new Database()) {
+            database.disconnect();
             var result = database.query("select * from X");
             IO.println("result: " + result);
-        } finally {
-            database.disconnect();
+        } catch (Exception e) {
+            IO.println("error while closing the connection");
+            throw new RuntimeException(e);
         }
     }
 
 
 }
 
-class Database {
+class Database implements AutoCloseable {
     private boolean isConnected;
 
     public Database() {
@@ -28,6 +30,12 @@ class Database {
     }
 
     public void disconnect() {
+        IO.println("disconnect");
         isConnected = false;
+    }
+
+    @Override
+    public void close() throws Exception {
+        disconnect();
     }
 }
