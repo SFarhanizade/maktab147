@@ -1,27 +1,33 @@
 package ir.maktabsharif.exception;
 
-import java.util.Random;
-
 public class Finally {
     void main() {
-        int result = someMethod();
-
-        IO.println("result: "+result);
+        var database = new Database();
+        try {
+            var result = database.query("select * from X");
+            IO.println("result: " + result);
+        } finally {
+            database.disconnect();
+        }
     }
 
-    int someMethod() {
-        var random = new Random();
-        try {
-            if(random.nextBoolean()){
-                throw new RuntimeException();
-            }
-            return 1;
-        } catch (Exception e) {
-            IO.println("error");
-            return -1;
-        } finally {
-            IO.println("finally");
-            return 0;
-        }
+
+}
+
+class Database {
+    private boolean isConnected;
+
+    public Database() {
+        isConnected = true;
+    }
+
+    public Object query(String sql) {
+        if (!isConnected)
+            throw new IllegalStateException("database is not connected");
+        return new Object();
+    }
+
+    public void disconnect() {
+        isConnected = false;
     }
 }
