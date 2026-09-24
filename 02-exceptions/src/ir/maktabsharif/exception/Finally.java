@@ -1,19 +1,27 @@
 package ir.maktabsharif.exception;
 
+import java.util.Random;
+
 public class Finally {
     void main() {
-        try {
-            IO.println("calculate(1);");
-            calculate(1);
-            IO.println("success!");
-        } catch (Exception e) {
-            IO.println("error");
-        } finally {
-            IO.println("finally");
-        }
+        int result = someMethod();
+
+        IO.println("result: "+result);
     }
 
-    void calculate(int x) {
-        throw new RuntimeException();
+    int someMethod() {
+        var random = new Random();
+        try {
+            if(random.nextBoolean()){
+                throw new RuntimeException();
+            }
+            return 1;
+        } catch (Exception e) {
+            IO.println("error");
+            return -1;
+        } finally {
+            IO.println("finally");
+            return 0;
+        }
     }
 }
