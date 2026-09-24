@@ -2,16 +2,20 @@ package ir.maktabsharif.exception;
 
 public class ThrowingException {
     void main() {
-        validateState(getState(1));
-        validateState(getState(2));
-        validateState(getState(3));
-        validateState(getState(4));
+        try {
+            validateState(getState(1));
+            validateState(getState(2));
+            validateState(getState(3));
+            validateState(getState(4));
+        } catch (RuntimeException e) {
+            IO.println("Invalid state: " + e.getMessage());
+        }
     }
 
     private void validateState(String state) {
-        if(state.equals("Unknown")){
+        if (state.equals("Unknown")) {
             IO.println("Invalid state");
-        }else {
+        } else {
             IO.println(state);
         }
     }
@@ -24,7 +28,7 @@ public class ThrowingException {
             case 1 -> "OK";
             case 2 -> "Failed";
             case 3 -> "Something";
-            default -> "Unknown";
+            default -> throw new RuntimeException("Unknown");
         };
     }
 }
