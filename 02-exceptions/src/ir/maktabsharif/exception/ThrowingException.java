@@ -8,7 +8,7 @@ public class ThrowingException {
             validateState(getState(3));
             validateState(getState(4));
         } catch (InvalidStateException e) {
-            IO.println("Invalid state: " + e.getMessage());
+            IO.println("Invalid state: " + e.getMessage() + "(" + e.getStateNumber() + ")");
             e.printStackTrace();
         } catch (RuntimeException e) {
             IO.println("RuntimeException: " + e.getMessage());
@@ -35,13 +35,20 @@ public class ThrowingException {
             case 1 -> "OK";
             case 2 -> "Failed";
             case 3 -> "Something";
-            default -> throw new InvalidStateException("Unknown");
+            default -> throw new InvalidStateException(stateNumber);
         };
     }
 }
 
 class InvalidStateException extends RuntimeException {
-    public InvalidStateException(String message) {
-        super(message);
+    private final int stateNumber;
+
+    public InvalidStateException(int stateNumber) {
+        super("Unknown");
+        this.stateNumber = stateNumber;
+    }
+
+    public int getStateNumber() {
+        return stateNumber;
     }
 }
