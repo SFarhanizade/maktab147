@@ -9,11 +9,13 @@ import java.util.function.Supplier;
 public class Main {
     static void main() {
         Predicate<Integer> isEven = number -> number % 2 == 0;
+        Predicate<Integer> isDividableBy5 = number -> number % 5 == 0;
+        Predicate<Integer> condition = isEven.and(isDividableBy5);
         Function<Integer, Integer> timesTen = number -> number * 10;
         Supplier<String> labelProvider = () -> "Result:";
         Consumer<Object> printer = value -> IO.println(value);
         Consumer<Integer> evenPrinter = number -> {
-            if (isEven.test(number)) {
+            if (condition.test(number)) {
                 Integer multiplied = timesTen.apply(number);
                 printer.accept(multiplied);
             }
