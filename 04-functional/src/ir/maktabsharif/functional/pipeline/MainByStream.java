@@ -13,7 +13,13 @@ public class MainByStream {
         Predicate<Integer> condition = isEven.and(isDividableBy5);
         Function<Integer, Integer> timesTen = number -> number * 10;
         Supplier<String> labelProvider = () -> "Result:";
-        Consumer<Object> printer = value -> IO.println(value);
+
+//        lambda expression:
+//        Consumer<Object> printer = value -> IO.println(value);
+
+//        method reference:
+        Consumer<Object> printer = IO::println;
+//        Consumer<Object> printer = System.out::println;
 
         var numbers = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         String label = labelProvider.get();
