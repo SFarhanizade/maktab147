@@ -11,20 +11,23 @@ public class Main {
         Predicate<Integer> isEven = number -> number % 2 == 0;
         Function<Integer, Integer> timesTen = number -> number * 10;
         Supplier<String> labelProvider = () -> "Result:";
-        Consumer<Object> printer = value-> IO.println(value);
-        Consumer<Integer> evenPrinter = number ->{
-            if(isEven.test(number)){
+        Consumer<Object> printer = value -> IO.println(value);
+        Consumer<Integer> evenPrinter = number -> {
+            if (isEven.test(number)) {
                 Integer multiplied = timesTen.apply(number);
                 printer.accept(multiplied);
             }
         };
+        Consumer<List<Integer>> loop = numbers -> {
+            String label = labelProvider.get();
+            printer.accept(label);
+            for (var number : numbers) {
+                evenPrinter.accept(number);
+            }
+        };
 
         var numbers = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        loop.accept(numbers);
 
-        String label = labelProvider.get();
-        printer.accept(label);
-        for (var number : numbers) {
-            evenPrinter.accept(number);
-        }
     }
 }
