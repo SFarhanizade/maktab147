@@ -2,6 +2,7 @@ package ir.maktabsharif.streams;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -14,20 +15,15 @@ public class Main {
                 new Person("Hamed", 25)
         );
 
-        //using Stream
-        Double avg = people.stream()
-                .collect(Collectors.averagingInt(Person::age));
+        var oldest = people.stream()
+                .reduce((person1, person2) -> {
+                    if (person1.age() > person2.age())
+                        return person1;
+                    return person2;
+                })
+                .get();
 
-        IO.println("Average age: "+avg);
-
-        //using IntStream
-        Double avg2 = people.stream()
-                .mapToInt(Person::age)
-                .average()
-                .getAsDouble();
-
-        IO.println("Average age: "+avg2);
-
+        IO.println("Oldest person: "+oldest);
     }
 
     record Person(String name,int age){}
