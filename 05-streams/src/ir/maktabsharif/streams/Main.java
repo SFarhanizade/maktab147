@@ -14,12 +14,11 @@ public class Main {
                 new Person("Hamed", 25)
         );
 
-        Map<Integer, List<Person>> result = people.stream()
-                .collect(Collectors.groupingBy(Person::age));
+        String result = people.stream()
+                .map(Person::name)
+                .collect(Collectors.joining(", "));
 
-        for (var entry : result.entrySet()) {
-            IO.println(entry);
-        }
+        IO.println(result);
     }
 
     record Person(String name,int age){}
