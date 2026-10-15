@@ -14,11 +14,20 @@ public class Main {
                 new Person("Hamed", 25)
         );
 
-        String result = people.stream()
-                .map(Person::name)
-                .collect(Collectors.joining(", "));
+        //using Stream
+        Double avg = people.stream()
+                .collect(Collectors.averagingInt(Person::age));
 
-        IO.println(result);
+        IO.println("Average age: "+avg);
+
+        //using IntStream
+        Double avg2 = people.stream()
+                .mapToInt(Person::age)
+                .average()
+                .getAsDouble();
+
+        IO.println("Average age: "+avg2);
+
     }
 
     record Person(String name,int age){}
