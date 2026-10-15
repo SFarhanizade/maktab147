@@ -1,30 +1,26 @@
 package ir.maktabsharif.streams;
 
 import java.util.Iterator;
+import java.util.function.Predicate;
 
-public class MyIterator implements Iterator<Integer> {
-    private final Iterator<Integer> iterator;
-    private Integer next;
+public class MyIterator<E> implements Iterator<E> {
+    private final Iterator<E> iterator;
+    private final Predicate<E> condition;
+    private E next;
 
-    public MyIterator(Iterator<Integer> iterator) {
+    public MyIterator(Iterator<E> iterator, Predicate<E> condition) {
         this.iterator = iterator;
+        this.condition = condition.negate();
     }
 
-    //while (iterator.hasNext()) {
-    //            var number = iterator.next();
-    //            if (number % 2 == 0)
-    //                IO.println(number);
-    //        }
     @Override
     public boolean hasNext() {
         var hasNext = iterator.hasNext();
-
         if (!hasNext) return false;
 
         next = iterator.next();
-//var numbers = List.of(2, 1, 3, 4, 5, 6, 7, 8, 9);
-//var numbers = List.of(1);
-        while (next % 2 != 0) {
+
+        while (condition.test(next)) {
             if (iterator.hasNext())
                 next = iterator.next();
             else return false;
@@ -35,7 +31,7 @@ public class MyIterator implements Iterator<Integer> {
     }
 
     @Override
-    public Integer next() {
+    public E next() {
         return next;
     }
 }
