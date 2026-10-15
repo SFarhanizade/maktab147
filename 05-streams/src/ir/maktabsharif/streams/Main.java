@@ -6,18 +6,21 @@ import java.util.stream.Collectors;
 
 public class Main {
     void main() {
-        var numbers = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        Map<Boolean, List<Integer>> result = numbers.stream()
-                .collect(Collectors.partitioningBy(number -> number % 2 == 0));
+        var people = List.of(
+                new Person("Ali", 10),
+                new Person("Reza", 10),
+                new Person("Ahmad", 20),
+                new Person("Hooman", 25),
+                new Person("Hamed", 25)
+        );
 
-        var evens = result.get(true);
-        var odds = result.get(false);
+        Map<Integer, List<Person>> result = people.stream()
+                .collect(Collectors.groupingBy(Person::age));
 
-        IO.println("evens:");
-        IO.println(evens);
-
-        IO.println("=====");
-        IO.println("odds:");
-        IO.println(odds);
+        for (var entry : result.entrySet()) {
+            IO.println(entry);
+        }
     }
+
+    record Person(String name,int age){}
 }
