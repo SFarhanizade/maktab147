@@ -1,22 +1,23 @@
 package ir.maktabsharif.streams;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
-import java.util.stream.Stream;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Main {
-     void main() {
-         Predicate<String> stringPredicate = input -> !input.equals("0");
-         Function<String,Integer> toLength = String::length;
-         Consumer<Object> print = IO::println;
+    void main() {
+        var numbers = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        Map<Boolean, List<Integer>> result = numbers.stream()
+                .collect(Collectors.partitioningBy(number -> number % 2 == 0));
 
-         Stream.generate(IO::readln)
-                 .takeWhile(stringPredicate)
-                 .map(toLength)
-                 .forEach(print);
-     }
+        var evens = result.get(true);
+        var odds = result.get(false);
+
+        IO.println("evens:");
+        IO.println(evens);
+
+        IO.println("=====");
+        IO.println("odds:");
+        IO.println(odds);
+    }
 }
