@@ -1,4 +1,4 @@
-package ir.maktabsharif.streams;
+package ir.maktabsharif.streams.itr;
 
 import java.util.Iterator;
 import java.util.function.Predicate;
